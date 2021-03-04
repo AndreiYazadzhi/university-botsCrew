@@ -39,9 +39,9 @@ public class ConsoleHandler {
         boolean isCorrect = false;
         while (true) {
             String input = scanner.nextLine();
-            for (Map.Entry<String, Command> entry : handler.entrySet()) {
-                if (input.matches(entry.getKey())) {
-                    entry.getValue().execute(input.replaceAll(entry.getKey(), "$1"));
+            for (Map.Entry<String, Command> action : handler.entrySet()) {
+                if (input.matches(action.getKey())) {
+                    action.getValue().execute(input.replaceAll(action.getKey(), "$1"));
                     isCorrect = true;
                     break;
                 }
