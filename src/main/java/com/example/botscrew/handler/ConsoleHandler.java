@@ -21,33 +21,40 @@ public class ConsoleHandler {
     public ConsoleHandler(ApplicationContext applicationContext) {
         handler.put("Who is head of department ([\\w ]+)",
                 applicationContext.getBean(HeadOfDepartmentCommand.class));
+
         handler.put("(help)", applicationContext.getBean(HelpCommand.class));
+
         handler.put("Show ([\\w ]+) statistics",
                 applicationContext.getBean(ShowStatisticCommand.class));
+
         handler.put("Show the average salary for the department ([\\w ]+)",
                 applicationContext.getBean(GetAvgSalaryByDepartmentCommand.class));
+
         handler.put("Show count of employee for ([\\w ]+)",
                 applicationContext.getBean(GetCountOfLecturersCommand.class));
+
         handler.put("Global search by ([\\w ]+)",
                 applicationContext.getBean(GetByNameContainsPatternCommand.class));
+
         handler.put("q|quit", applicationContext.getBean(QuitCommand.class));
     }
 
     public void handle() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Type 'help' for more details");
+        System.out.println("Type 'help' for details");
         boolean isCorrect = false;
         while (true) {
             String input = scanner.nextLine();
             for (Map.Entry<String, Command> action : handler.entrySet()) {
                 if (input.matches(action.getKey())) {
-                    action.getValue().execute(input.replaceAll(action.getKey(), "$1"));
+                    action.getValue()
+                            .execute(input.replaceAll(action.getKey(), "$1"));
                     isCorrect = true;
                     break;
                 }
             }
             if (!isCorrect) {
-                System.out.println("Incorrect command! Please, try again.");
+                System.out.println("Incorrect command!");
             }
             isCorrect = false;
         }

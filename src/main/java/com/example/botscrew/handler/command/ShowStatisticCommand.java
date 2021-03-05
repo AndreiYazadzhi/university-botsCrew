@@ -15,8 +15,7 @@ public class ShowStatisticCommand implements Command {
     public void execute(String department) {
         List<Statistics> statistics = departmentService.countByPosition(department);
         for (Statistics details : statistics) {
-            System.out.println(details.getPosition().name().toLowerCase()
-                    + " - " + details.getCount());
+            System.out.println(details.getPosition().name() + " - " + details.getCount());
         }
     }
 }
