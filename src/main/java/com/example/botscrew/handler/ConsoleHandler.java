@@ -33,7 +33,7 @@ public class ConsoleHandler {
         handler.put("5 ([\\w ]+)",
                 applicationContext.getBean(GetByNameContainsPatternCommand.class));
 
-        handler.put("q|quit", applicationContext.getBean(QuitCommand.class));
+        handler.put("(exit) |q|", applicationContext.getBean(QuitCommand.class));
     }
 
     public void handle() {
