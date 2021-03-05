@@ -5,7 +5,6 @@ import com.example.botscrew.handler.command.GetAvgSalaryByDepartmentCommand;
 import com.example.botscrew.handler.command.GetByNameContainsPatternCommand;
 import com.example.botscrew.handler.command.GetCountOfLecturersCommand;
 import com.example.botscrew.handler.command.HeadOfDepartmentCommand;
-import com.example.botscrew.handler.command.HelpCommand;
 import com.example.botscrew.handler.command.QuitCommand;
 import com.example.botscrew.handler.command.ShowStatisticCommand;
 import java.util.HashMap;
@@ -19,21 +18,19 @@ public class ConsoleHandler {
     private final Map<String, Command> handler = new HashMap<>();
 
     public ConsoleHandler(ApplicationContext applicationContext) {
-        handler.put("Who is head of department ([\\w ]+)",
+        handler.put("1 ([\\w ]+)",
                 applicationContext.getBean(HeadOfDepartmentCommand.class));
 
-        handler.put("(help)", applicationContext.getBean(HelpCommand.class));
-
-        handler.put("Show ([\\w ]+) statistics",
+        handler.put("2 ([\\w ]+)",
                 applicationContext.getBean(ShowStatisticCommand.class));
 
-        handler.put("Show the average salary for the department ([\\w ]+)",
+        handler.put("3 ([\\w ]+)",
                 applicationContext.getBean(GetAvgSalaryByDepartmentCommand.class));
 
-        handler.put("Show count of employee for ([\\w ]+)",
+        handler.put("4 ([\\w ]+)",
                 applicationContext.getBean(GetCountOfLecturersCommand.class));
 
-        handler.put("Global search by ([\\w ]+)",
+        handler.put("5 ([\\w ]+)",
                 applicationContext.getBean(GetByNameContainsPatternCommand.class));
 
         handler.put("q|quit", applicationContext.getBean(QuitCommand.class));
@@ -41,8 +38,15 @@ public class ConsoleHandler {
 
     public void handle() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Type 'help' for details");
         boolean isCorrect = false;
+        String help = "'Type command number and enter value after whitespace\n"
+                + "'1 Who is head of department {department_name}'\n"
+                + "'2 Show {department_name} statistics'\n"
+                + "'3 Show the average salary for the department {department_name}'\n"
+                + "'4 Show count of employee for {department_name}'\n"
+                + "'5 Global search by {template}'\n"
+                + "'q' - for exit";
+        System.out.println(help);
         while (true) {
             String input = scanner.nextLine();
             for (Map.Entry<String, Command> action : handler.entrySet()) {
